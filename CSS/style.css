@@ -1,0 +1,19 @@
+body
+{
+    background-color: #ffcc75
+}
+
+#ajaxSample
+{
+    width: 640px;
+    margin: auto, 0px;
+    border: 1px solid red;
+    background-color: darksalmon;
+}
+
+#cartoon
+{
+    float: right;
+    width: 350px;
+}
+
