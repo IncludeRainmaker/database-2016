@@ -47,9 +47,13 @@
 
                 <div id="database_tab" class="tab-pane fade">
                     <div id="selectdb">
-                        <select id="databases">
+                        <select id="databases" size="8">
                         </select>
-                        <button type="button" id="getTables">Select Database</button>
+                        <span id="dboptions">
+                            <button type="button" id="describeDatabase" class="btn_db_tab">Select Database</button>
+                            <button type="button" id="createTable" class="btn_db_tab">Create Database</button>
+                            <button type="button" id="dropDatabase" class="btn_db_tab">Drop Database</button>
+                        </span>
                     </div>
                 </div>
                 <div id="tables" class="tab-pane fade">
