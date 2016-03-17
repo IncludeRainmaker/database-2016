@@ -2,7 +2,7 @@ function theAjax(method, server, username, password)
 {
 
     return $.ajax({
-            url: 'GetDatabases.php',
+            url: 'PHP/GetDatabases.php',
             type: 'POST',
             data: {method: method, server: server, username: username, password: password}
         });

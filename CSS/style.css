@@ -1,19 +1,23 @@
 body
 {
-    background-color: #ffcc75
+    background-color:#90a7a6
 }
 
-#ajaxSample
+#page-wrap
 {
-    width: 640px;
-    margin: auto, 0px;
-    border: 1px solid red;
-    background-color: darksalmon;
+    width: 800px;
+    margin: 0 auto;
 }
 
-#cartoon
+#login-box
 {
-    float: right;
-    width: 350px;
+    padding-top: 5%;
+    width: auto;
+
 }
 
+#login-form
+{
+    display: block;
+    padding-bottom: 15px;
+}
