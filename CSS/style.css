@@ -1,6 +1,7 @@
 body
 {
-    background-color:#90a7a6
+    background-color:#fffefe
+
 }
 
 #page-wrap
@@ -20,4 +21,10 @@ body
 {
     display: block;
     padding-bottom: 15px;
+}
+
+#selectdb
+{
+    text-align: left;
+    padding-top: 2%;
 }
