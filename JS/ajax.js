@@ -1,4 +1,12 @@
-function fetch_data_php(method, server, username, password)
+/**
+ * [fetch_data_php description]
+ * @param  {string} method   [desired php method]
+ * @param  {string} server   [server ip]
+ * @param  {string} username [username]
+ * @param  {string} password [password]
+ * @return {array}           [database info]
+ */
+function execute_php(method, server, username, password)
 {
 
     return $.ajax({
@@ -10,26 +18,40 @@ function fetch_data_php(method, server, username, password)
 
 /**
  * This function will call the give
- * @param  {string} php_function [function to run]
+ * @param  {string} php_function [function to run in php]
  * @return {[type]}              [description]
  */
-function call_php(php_function)
+function build_ajax(php_function)
 {
     var server, username, password, method;
     server = JSON.stringify($('#server').val());
     username = JSON.stringify($('#username').val());
     password = JSON.stringify($('#password').val());
     method = JSON.stringify()
-    ajax = theAjax(php_function, server, username, password);
+    ajax = execute_php(php_function, server, username, password);
     ajax.done(processData);
     ajax.fail(function (){alert("Failure");});
+}
+/**
+ * Sets focus to Database tabs. 
+ */
+function set_db_focus()
+{
+    $('.nav-tabs a[href="#database_tab"]').tab('show');
 }
 
 function loadDatabasesList()
 {
     var php_function = "getDatabases";
-    call_php(php_function);
+    build_ajax(php_function);
+    set_db_focus();
     return;
+}
+
+function loadTablesList()
+{
+    var php_function = "describeTables";
+    build_ajax(php_function);
 }
 
 function processData(response_in)
@@ -40,6 +62,7 @@ function processData(response_in)
     $.each (response.data['database_names'], function(key, value)
     {
         $("#databases").append($('<option>',{
+            onclick: "loadTablesList(this)",
             value: value.toString(),
             text:  value.toString()}));
     });
