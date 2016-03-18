@@ -1,5 +1,5 @@
 /**
- * Name: Ajax.js
+ * Name: database.js
  *
  * Description: This class handels DB Crud.
  *
@@ -94,7 +94,5 @@ function process_database(response_in)
 
 function createDatabase()
 {
-    var php_function = "createDatabase";
-    var dbname = "";
-    ajax = build_ajax(php_function, dbname);
+  empty_select("#databases");
 }
