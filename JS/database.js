@@ -15,30 +15,35 @@
  * @param  {string} password [password]
  * @return {array}           [database info]
  */
-function execute_php(method, server, username, password, dbname)
+function execute_php(method, server, username, password, dbname, new_dbname)
 {
     return $.ajax({
             url: 'PHP/CRUD_Database.php',
             type: 'POST',
             data: {method: method, server: server, username: username, password: password,
-                   database_name: ""}
+                   database_name: dbname, createdbname: new_dbname}
         });
 }
 
 /**
- * This function will call the give
+ * This function will call the given php function.
  * @param  {string} php_function [function to run in php]
+ * @param  {[type]} db_name      [description]
+ * @param  {[type]} new_dbname   [description]
  * @return {[type]}              [description]
  */
-function build_ajax(php_function, db_name)
+function build_ajax(php_function, db_name, new_dbname)
 {
     var server, username, password, method;
+
     server = JSON.stringify($('#server').val());
     username = JSON.stringify($('#username').val());
     password = JSON.stringify($('#password').val());
     method = JSON.stringify(php_function);
     db_name = JSON.stringify(db_name);
-    ajax = execute_php(php_function, server, username, password, db_name);
+    new_dbname JSON.stringify(new_dbname);
+
+    ajax = execute_php(php_function, server, username, password, db_name, new_dbname);
     return ajax;
 }
 
@@ -65,9 +70,11 @@ function build_ajax(php_function, db_name)
 function loadDatabasesList()
 {
     empty_select("#databases")
+
     var php_function = "getDatabases";
     var dbname = "";
-    ajax = build_ajax(php_function, dbname);
+
+    ajax = build_ajax(php_function, dbname, dbname);
     ajax.done(process_database);
     ajax.fail(function (){alert("Failure");});
     $('.nav-tabs a[href="#database_tab"]').tab('show');
@@ -94,5 +101,11 @@ function process_database(response_in)
 
 function createDatabase()
 {
-  empty_select("#databases");
+    var php_function = "createDatabase";
+    var new_dbname = "#db_name_txt";
+    var dbname = "";
+    build_ajax(php_function, dbname, new_dbname);
+    loadDatabasesList();
+    $("#create_database").modal('hide');
+    return;
 }

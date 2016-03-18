@@ -7,21 +7,13 @@ function sanitize($str, $quotes = ENT_NOQUOTES) {
     return $str;
 }
 
-function connectToDB($in_database)
+function connectToDB()
 {
     // retrieve and sanitize posted values.
-    if (isset($_POST['server']))
-    {
-        $server = json_decode(sanitize($_POST['server']));
-    }
-    if (isset($_POST['username']))
-    {
-        $username = json_decode(sanitize($_POST['username']));
-    }
-    if (isset($_POST['password']))
-    {
-        $password = json_decode(sanitize($_POST['password']));
-    }
+    $server = get_post_val('server');
+    $username = get_post_val('username');
+    $password = get_post_val('password');
+
     if (isset($_POST['database_name']))
     {
         $database_name = json_decode(sanitize($_POST['database_name']));
@@ -41,9 +33,9 @@ function connectToDB($in_database)
  */
 function getDatabases()
 {
-    $dbConn = connectToDB(false);
+    $dbConn = connectToDB();
     $databaseNames = array();
-    $query = "SHOW DATABASES";
+    $query = "SHOW DATABASES;";
     $result = $dbConn->query($query);
 
     if ($result) {
@@ -61,8 +53,28 @@ function getDatabases()
     return $json;
 }
 
+function get_post_val($input)
+{
+    if (isset($_POST[$input]))
+    {
+        return json_decode(sanitize($_POST[$input]));
+    }
+
+    return "";
+}
+
 function createDatabase()
 {
     $dbConn = connectToDB();
+    $query = "CREATE DATABASE " + get_post_val('createdbname');
+    $result = $dbConn->query($query);
 
+    if(!$result)
+    {
+      die(mysqli_error());
+    }
+
+    mysqli_close($dbConn);
+
+    return;
 }
