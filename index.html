@@ -17,6 +17,7 @@
     </head>
     <body>
         <div id="page-wrap">
+
             <h2>SQL Lite - DB2016</h2>
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#login">Login</a></li>
@@ -50,10 +51,14 @@
                         <select id="databases" size="8">
                         </select>
                         <span id="dboptions">
-                            <button type="button" id="describeDatabase" class="btn_db_tab">Select Database</button>
-                            <button type="button" id="createDatabase" class="btn_db_tab">Create Database</button>
-                            <button type="button" id="dropDatabase" class="btn_db_tab">Drop Database</button>
+                            <button type="button"  class="btn_db_tab btn btn-primary">Select Database</button>
+                            <button type="button" data-toggle="modal" datatarget="#create_database"
+                            class="btn_db_tab btn btn-primary">Create Database</button>
+                            <button type="button" id="dropDatabase" class="btn_db_tab btn btn-primary">Drop Database</button>
                         </span>
+                    </div>
+                    <div class="modal fade" id="create_database">
+
                     </div>
                 </div>
                 <div id="tables" class="tab-pane fade">

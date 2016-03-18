@@ -15,13 +15,13 @@
  * @param  {string} password [password]
  * @return {array}           [database info]
  */
-function execute_php(method, server, username, password)
+function execute_php(method, server, username, password, dbname)
 {
-
     return $.ajax({
-            url: 'PHP/GetDatabases.php',
+            url: 'PHP/CRUD_Database.php',
             type: 'POST',
-            data: {method: method, server: server, username: username, password: password}
+            data: {method: method, server: server, username: username, password: password,
+                   database_name: ""}
         });
 }
 
@@ -30,14 +30,15 @@ function execute_php(method, server, username, password)
  * @param  {string} php_function [function to run in php]
  * @return {[type]}              [description]
  */
-function build_ajax(php_function)
+function build_ajax(php_function, db_name)
 {
     var server, username, password, method;
     server = JSON.stringify($('#server').val());
     username = JSON.stringify($('#username').val());
     password = JSON.stringify($('#password').val());
-    method = JSON.stringify()
-    ajax = execute_php(php_function, server, username, password);
+    method = JSON.stringify(php_function);
+    db_name = JSON.stringify(db_name);
+    ajax = execute_php(php_function, server, username, password, db_name);
     return ajax;
 }
 
@@ -65,7 +66,8 @@ function loadDatabasesList()
 {
     empty_select("#databases")
     var php_function = "getDatabases";
-    ajax = build_ajax(php_function);
+    var dbname = "";
+    ajax = build_ajax(php_function, dbname);
     ajax.done(process_database);
     ajax.fail(function (){alert("Failure");});
     $('.nav-tabs a[href="#database_tab"]').tab('show');
@@ -87,3 +89,12 @@ function process_database(response_in)
     });
 }
 // NOTE: End Describe Databases
+
+// NOTE: Start Create Database
+
+function createDatabase()
+{
+    var php_function = "createDatabase";
+    var dbname = "";
+    ajax = build_ajax(php_function, dbname);
+}

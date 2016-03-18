@@ -7,7 +7,8 @@ function sanitize($str, $quotes = ENT_NOQUOTES) {
     return $str;
 }
 
-function getDatabases() {
+function connectToDB($in_database)
+{
     // retrieve and sanitize posted values.
     if (isset($_POST['server']))
     {
@@ -21,10 +22,27 @@ function getDatabases() {
     {
         $password = json_decode(sanitize($_POST['password']));
     }
+    if (isset($_POST['database_name']))
+    {
+        $database_name = json_decode(sanitize($_POST['database_name']));
+        $dbConn = mysqli_connect($server, $username, $password, $database_name);
+    }
+    else
+    {
+        $dbConn = mysqli_connect($server, $username, $password);
+    }
 
+    return $dbConn;
+}
+
+/**
+ * This function performs the call get the databases.
+ * @return {array}
+ */
+function getDatabases()
+{
+    $dbConn = connectToDB(false);
     $databaseNames = array();
-
-    $dbConn = mysqli_connect($server, $username, $password);
     $query = "SHOW DATABASES";
     $result = $dbConn->query($query);
 
@@ -33,11 +51,18 @@ function getDatabases() {
             array_push($databaseNames, $row[0]);
         }
     }
-    
+
     $return = new stdClass;
     $return->succsss = true;
     $return->errorMessage = "";
     $return->data['database_names'] = $databaseNames;
     $json = json_encode($return);
-    echo $json;
+    mysqli_close($dbConn);
+    return $json;
+}
+
+function createDatabase()
+{
+    $dbConn = connectToDB();
+
 }
