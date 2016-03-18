@@ -20,13 +20,13 @@
 
             <h2>SQL Lite - DB2016</h2>
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#login">Login</a></li>
+                <li class="active"><a data-toggle="tab" href="#login_tab">Login</a></li>
                 <li><a data-toggle="tab" href="#database_tab">Databases</a></li>
-                <li><a data-toggle="tab" href="#tables">Tables</a></li>
+                <li><a data-toggle="tab" href="#tables_tab">Tables</a></li>
             </ul>
             <div class="tab-content">
                 <!-- Login Panel -->
-                <div id="login" class="tab-pane fade in active">
+                <div id="login_tab" class="tab-pane fade in active">
                     <div id="login-box">
                         <from  class="form-inline" id="login-form">
                             <div class="form-group">
@@ -48,12 +48,11 @@
 
                 <div id="database_tab" class="tab-pane fade">
                     <div id="selectdb">
-                        <select id="databases" size="8">
+                        <select id="databases" size="10">
                         </select>
                         <span id="dboptions">
+                            <button type="button" onclick="show_tables()" class="btn_db_tab btn btn-primary">Select Database</button>
                             <button type="button"  class="btn_db_tab btn btn-primary">Select Database</button>
-                            <button type="button" data-toggle="modal" datatarget="#create_database"
-                            class="btn_db_tab btn btn-primary">Create Database</button>
                             <button type="button" id="dropDatabase" class="btn_db_tab btn btn-primary">Drop Database</button>
                         </span>
                     </div>
@@ -61,8 +60,9 @@
 
                     </div>
                 </div>
-                <div id="tables" class="tab-pane fade">
-                    <h3>Test 3</h3>
+                <div id="tables_tab" class="tab-pane fade">
+                    <select id="tables_select" size="10">
+                    </select>
                 </div>
             </div>
             </div>

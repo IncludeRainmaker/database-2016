@@ -25,7 +25,7 @@ function connectToDB($in_database)
     if (isset($_POST['database_name']))
     {
         $database_name = json_decode(sanitize($_POST['database_name']));
-        $dbConn = mysqli_connect($server, $username, $password, $database_name);
+        return $dbConn = mysqli_connect($server, $username, $password, $database_name);
     }
     else
     {
@@ -45,6 +45,7 @@ function getDatabases()
     $databaseNames = array();
     $query = "SHOW DATABASES";
     $result = $dbConn->query($query);
+    mysqli_close($dbConn);
 
     if ($result) {
         while ($row = $result->fetch_array()) {
@@ -53,16 +54,34 @@ function getDatabases()
     }
 
     $return = new stdClass;
-    $return->succsss = true;
+    $return->successs = true;
     $return->errorMessage = "";
     $return->data['database_names'] = $databaseNames;
     $json = json_encode($return);
-    mysqli_close($dbConn);
     return $json;
 }
 
-function createDatabase()
+function showTables()
 {
     $dbConn = connectToDB();
+    $table_names = array();
+    $query = "SHOW TABLES";
+    $result = $dbConn->query($query);
+    mysqli_close($dbConn);
+
+    if ($result)
+    {
+      while ($row = $result->fetch_arr())
+      {
+        array_push($table_names, $row[0]);
+      }
+    }
+
+    $return = new stdClass;
+    $return->success = true;
+    $return->error_message = "";
+    $return->data['table_names'] = $table_names;
+    $json = json_encode($return);
+    return $json;
 
 }

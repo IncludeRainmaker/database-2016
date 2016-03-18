@@ -77,13 +77,10 @@ function loadDatabasesList()
 function process_database(response_in)
 {
     var response = JSON.parse(response_in);
-    var html = "";
-
 
     $.each (response.data['database_names'], function(key, value)
     {
         $("#databases").append($("<option>",{
-            onclick: "loadTablesList(this)",
             value: value.toString(),
             text:  value.toString()}));
     });
@@ -97,4 +94,27 @@ function createDatabase()
     var php_function = "createDatabase";
     var dbname = "";
     ajax = build_ajax(php_function, dbname);
+}
+
+
+function build_table_html(response_in)
+{
+  var response = JSON.parse(response_in);
+
+  $.each (response.data['table_names'], function(key, value)
+  {
+      $("#tables_select").append($("<option>",{
+          value: value.toString(),
+          text:  value.toString()}));
+  });
+}
+
+function show_tables()
+{
+  var php_function = "showTables";
+  var dbname = $("#databases option:selected").val();
+  ajax = build_ajax(php_function, dbname);
+  ajax.done(build_table_html);
+  $('.nav-tabs a[href="#tables_tab"]').tab('show');
+  return;
 }
